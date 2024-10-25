@@ -1,35 +1,635 @@
+<html><head><base href="https://www.breakingcircuits.com"></head><body>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website Title</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Breaking Circuits - Enterprise Cybersecurity Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --dark-blue: #001320;
+            --alert-red: #ff0038;
+            --grid-color: rgba(0, 243, 255, 0.1);
+            --text-glow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-blue);
+            color: #fff;
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        header {
+            background: linear-gradient(45deg, #001320, #000710);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            color: var(--neon-blue);
+            text-shadow: var(--text-glow);
+            margin-bottom: 1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(0, 19, 32, 0.9);
+            border: 1px solid var(--neon-blue);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+        }
+
+        .service-card h3 {
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .service-card ul li {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .service-card:hover ul li {
+            color: white;
+        }
+
+        .service-metrics {
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .emergency-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--alert-red);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            animation: pulse 2s infinite;
+            z-index: 100;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 56, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 0, 56, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 56, 0);
+            }
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: rgba(0, 19, 32, 0.95);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        .chatbot-header {
+            padding: 1rem;
+            background: linear-gradient(45deg, #001320, #000710);
+            border-bottom: 2px solid var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: rgba(0, 243, 255, 0.1);
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: rgba(255, 255, 255, 0.1);
+            margin-right: auto;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            border-top: 1px solid var(--neon-blue);
+            display: flex;
+        }
+
+        .chatbot-input input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--neon-blue);
+            background: rgba(0, 19, 32, 0.8);
+            color: white;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        .chatbot-input button {
+            background: var(--neon-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--neon-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Emergency Form */
+        .emergency-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 19, 32, 0.95);
+            padding: 2rem;
+            border: 2px solid var(--alert-red);
+            border-radius: 10px;
+            z-index: 1002;
+        }
+
+        .emergency-form h2 {
+            color: var(--alert-red);
+            margin-bottom: 1rem;
+        }
+
+        .emergency-form input,
+        .emergency-form select,
+        .emergency-form textarea {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--alert-red);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+        }
+
+        @keyframes threatPulse {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to My Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="logo">BREAKING CIRCUITS</div>
+        <p>Enterprise Cybersecurity Solutions for Remote Workers & SMBs</p>
     </header>
 
-    <main>
-        <section>
-            <h2>Main Content</h2>
-            <p>This is the main content of your page. You can add more sections or articles here.</p>
-        </section>
-    </main>
+    <div class="services-grid">
+        <div class="service-card">
+            <h3>VPN Services</h3>
+            <p>Secure, encrypted connections for your remote workforce with enterprise-grade VPN solutions.</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>• Enterprise-grade encryption (AES-256)</li>
+                <li>• Multi-factor authentication integration</li>
+                <li>• Split tunneling capabilities</li>
+                <li>• Kill switch protection</li>
+                <li>• Geographic access controls</li>
+            </ul>
+            <div id="vpnStatus" style="margin-top: 15px; height: 150px; background: rgba(0,0,0,0.3); border: 1px solid var(--neon-blue); position: relative; overflow: hidden; padding: 10px;">
+                <div class="vpn-metrics" style="display: flex; justify-content: space-around; align-items: center; height: 100%;">
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">256</div>
+                        <div>Bit Encryption</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">99.9%</div>
+                        <div>Uptime</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">50+</div>
+                        <div>Locations</div>
+                    </div>
+                </div>
+            </div>
+            <div class="service-metrics" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 243, 255, 0.3);">
+                <small style="color: var(--neon-blue);">
+                    Connection Speed: Up to 10Gbps<br>
+                    Privacy Proxy<br>
+                    Concurrent Devices: Unlimited
+                </small>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>24/7 Monitoring</h3>
+            <p>Continuous threat detection and response with real-time security monitoring and global threat intelligence.</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>• Real-time threat detection and analysis</li>
+                <li>• Global attack surface monitoring</li>
+                <li>• Advanced SIEM integration</li>
+                <li>• Automated threat response</li>
+                <li>• IoC (Indicators of Compromise) tracking</li>
+            </ul>
+            <div id="threatMap" style="margin-top: 15px; height: 150px; background: rgba(0,0,0,0.3); border: 1px solid var(--neon-blue); position: relative; overflow: hidden;">
+                <!-- Threat map visualization will be rendered here -->
+            </div>
+            <div class="service-metrics" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 243, 255, 0.3);">
+                <small style="color: var(--neon-blue);">
+                    Average Detection Time: &lt;5 minutes<br>
+                    Global Coverage: 200+ Countries<br>
+                    Threat Intelligence: 24/7 Updates
+                </small>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>24/7 Help Desk</h3>
+            <p>Round-the-clock technical support staffed by certified security professionals. Our help desk provides:</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>• Immediate incident response</li>
+                <li>• Security configuration assistance</li>
+                <li>• VPN and 2FA troubleshooting</li>
+                <li>• Malware removal guidance</li>
+                <li>• Security best practices training</li>
+            </ul>
+            <div class="service-metrics" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 243, 255, 0.3);">
+                <small style="color: var(--neon-blue);">
+                    Average Response Time: &lt;15 minutes<br>
+                    Support Channels: Phone, Email, Chat<br>
+                    Languages: English, Spanish
+                </small>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>3-2-1 Backups</h3>
+            <p>Enterprise backup strategy: 3 copies, 2 different media types, 1 offsite location.</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>• Automated daily backups</li>
+                <li>• Cloud & local storage redundancy</li>
+                <li>• Encrypted backup storage</li>
+                <li>• Rapid recovery capabilities</li>
+                <li>• Ransomware-resistant backups</li>
+            </ul>
+            <div id="backupStatus" style="margin-top: 15px; height: 150px; background: rgba(0,0,0,0.3); border: 1px solid var(--neon-blue); position: relative; overflow: hidden; padding: 10px;">
+                <div class="backup-metrics" style="display: flex; justify-content: space-around; align-items: center; height: 100%;">
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">3x</div>
+                        <div>Redundancy</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">99.9%</div>
+                        <div>Reliability</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">15m</div>
+                        <div>Recovery Time</div>
+                    </div>
+                </div>
+            </div>
+            <div class="service-metrics" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 243, 255, 0.3);">
+                <small style="color: var(--neon-blue);">
+                    Backup Frequency: Daily/Hourly Options<br>
+                    Retention Period: Up to 7 years<br>
+                    Recovery Point Objective: &lt;24 hours
+                </small>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>Advanced Security Stack</h3>
+            <p>Comprehensive security with Mutiple Layed Defence integration.</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>• firewall with enterprise features</li>
+                <li>• IDS/IPS protection</li>
+                <li>• network monitoring & analytics</li>
+                <li>• threat detection engine</li>
+                <li>• Integrated threat intelligence feeds</li>
+            </ul>
+            <div id="securityStatus" style="margin-top: 15px; height: 150px; background: rgba(0,0,0,0.3); border: 1px solid var(--neon-blue); position: relative; overflow: hidden; padding: 10px;">
+                <div class="security-metrics" style="display: flex; justify-content: space-around; align-items: center; height: 100%;">
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">4</div>
+                        <div>Security Layers</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">10Gb</div>
+                        <div>Throughput</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">24/7</div>
+                        <div>Monitoring</div>
+                    </div>
+                </div>
+            </div>
+            <div class="service-metrics" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 243, 255, 0.3);">
+                <small style="color: var(--neon-blue);">
+                    Threat Detection Rate: 99.9%<br>
+                    Rule Updates: Real-time<br>
+                    Analysis Capabilities: Deep Packet Inspection
+                </small>
+            </div>
+        </div>
+        <div class="service-card">
+            <h3>2FA Implementation</h3>
+            <p>Enhanced access security with Two-Factor Authentication deployment.</p>
+            <ul style="list-style: none; margin-top: 10px;">
+                <li>• Multiple authentication methods support</li>
+                <li>• Hardware & software token integration</li>
+                <li>• Single Sign-On (SSO) compatibility</li>
+                <li>• Self-service portal for users</li>
+            </ul>
+            <div id="2faStatus" style="margin-top: 15px; height: 150px; background: rgba(0,0,0,0.3); border: 1px solid var(--neon-blue); position: relative; overflow: hidden; padding: 10px;">
+                <div class="2fa-metrics" style="display: flex; justify-content: space-around; align-items: center; height: 100%;">
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">99.9%</div>
+                        <div>Availability</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">5+</div>
+                        <div>2FA Methods</div>
+                    </div>
+                    <div class="metric">
+                        <div style="color: var(--neon-blue); font-size: 2em;">30s</div>
+                        <div>Setup Time</div>
+                    </div>
+                </div>
+            </div>
+            <div class="service-metrics" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 243, 255, 0.3);">
+                <small style="color: var(--neon-blue);">
+                    Authentication Methods: TOTP, FIDO2, SMS<br>
+                    Integration Time: &lt;24 hours<br>
+                    Support: 24/7 Implementation Assistance
+                </small>
+            </div>
+        </div>
+    </div>
 
-    <footer>
-        <p>&copy; 2024 Your Website Name</p>
-    </footer>
+    <button class="emergency-button" onclick="showEmergencyForm()">🚨 EMERGENCY CYBER RESPONSE</button>
 
-    <script src="scripts.js"></script>
+    <button class="chat-toggle" onclick="toggleChat()">💬</button>
+
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            Security Assistant
+        </div>
+        <div class="chatbot-messages" id="chatMessages"></div>
+        <div class="chatbot-input">
+            <input type="text" id="userInput" placeholder="Ask about our services...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <div class="emergency-form" id="emergencyForm">
+        <h2>Emergency Response Form</h2>
+        <form id="incidentForm">
+            <input type="text" placeholder="Company Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="tel" placeholder="Emergency Contact Number" required>
+            <select required>
+                <option value="">Select Incident Type</option>
+                <option value="ransomware">Ransomware Attack</option>
+                <option value="data-breach">Data Breach</option>
+                <option value="ddos">DDoS Attack</option>
+                <option value="other">Other Cyber Attack</option>
+            </select>
+            <textarea placeholder="Describe the incident..." required></textarea>
+            <button type="submit" style="background: var(--alert-red); color: white; padding: 1rem; border: none; width: 100%; border-radius: 4px;">
+                Submit Emergency Request
+            </button>
+        </form>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script>
+        // Chatbot knowledge base
+        const knowledge = {
+            vpn: {
+                info: "Our VPN service provides secure, encrypted connections for remote workers. It's essential for protecting sensitive data and maintaining compliance while working from anywhere.",
+                importance: "VPNs are crucial for remote work security as they encrypt all internet traffic and prevent unauthorized access to company resources."
+            },
+            monitoring: {
+                info: "24/7 security monitoring of your network and systems using advanced threat detection tools.",
+                importance: "Continuous monitoring enables rapid threat detection and response, minimizing potential damage from cyber attacks."
+            },
+            backup: {
+                info: "Our 3-2-1 backup strategy ensures your data is protected with 3 copies on 2 different media types and 1 offsite location.",
+                importance: "Proper backup strategy is crucial for business continuity and ransomware recovery."
+            },
+            security_stack: {
+                info: "Our advanced security stack combines PFsense firewall, Snort IDS/IPS, Zeek network monitoring, and Suricata threat detection for comprehensive protection.",
+                importance: "Multiple layers of security tools provide complete visibility and protection against modern cyber threats, from network intrusion to malware detection.",
+                features: {
+                    pfsense: "Enterprise-grade firewall and routing",
+                    snort: "Industry-leading intrusion detection",
+                    zeek: "Deep network visibility and analytics",
+                    suricata: "High-performance threat detection"
+                }
+            },
+            "2fa": {
+                info: "Two-factor authentication adds an extra layer of security beyond passwords.",
+                importance: "2FA prevents unauthorized access even if passwords are compromised."
+            }
+        };
+
+        let chatOpen = false;
+
+        async function getAIResponse(userMessage) {
+            try {
+                const response = await fetch('/api/ai_completion', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: `You are a cybersecurity assistant for Breaking Circuits. 
+                        Respond to the following user query about our services: ${userMessage}
+                        
+                        Use the knowledge base information to provide accurate, helpful responses.
+                        Keep responses concise but informative.
+                        
+                        <Response-Format>
+                        Provide direct, practical answers focused on how our services can help.
+                        Include a specific recommendation when appropriate.
+                        </Response-Format>`,
+                        data: knowledge
+                    }),
+                });
+                const data = await response.json();
+                return data.response;
+            } catch (error) {
+                console.error('Error fetching AI response:', error);
+                return "I apologize, but I'm having trouble connecting to our knowledge base. Please try again or contact our help desk directly.";
+            }
+        }
+
+        function toggleChat() {
+            const chatbot = document.querySelector('.chatbot-container');
+            chatOpen = !chatOpen;
+            chatbot.style.display = chatOpen ? 'flex' : 'none';
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const messages = document.getElementById('chatMessages');
+            
+            const userMessage = input.value.trim();
+            if (!userMessage) return;
+
+            // Add user message
+            messages.innerHTML += `<div class="message user-message">${userMessage}</div>`;
+            input.value = '';
+
+            // Get and add AI response
+            const response = await getAIResponse(userMessage);
+            messages.innerHTML += `<div class="message bot-message">${response}</div>`;
+            
+            // Auto-scroll to bottom
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function showEmergencyForm() {
+            document.getElementById('emergencyForm').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        // Close emergency form when clicking overlay
+        document.getElementById('overlay').onclick = function() {
+            document.getElementById('emergencyForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Handle emergency form submission
+        document.getElementById('incidentForm').onsubmit = function(e) {
+            e.preventDefault();
+            // Here you would typically send the form data to your emergency response team
+            alert('Emergency response team has been notified. We will contact you immediately.');
+            document.getElementById('emergencyForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Allow Enter key to send messages
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Simulated threat detection visualization
+        function initThreatMap() {
+            const threatMap = document.getElementById('threatMap');
+            
+            function createThreat() {
+                const threat = document.createElement('div');
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                threat.style.cssText = `
+                    position: absolute;
+                    left: ${x}%;
+                    top: ${y}%;
+                    width: 6px;
+                    height: 6px;
+                    background: var(--alert-red);
+                    border-radius: 50%;
+                    opacity: 0;
+                    transform: scale(0);
+                    animation: threatPulse 3s ease-out forwards;
+                `;
+                
+                threatMap.appendChild(threat);
+                
+                setTimeout(() => {
+                    threat.remove();
+                }, 3000);
+            }
+            
+            setInterval(createThreat, 1000);
+        }
+
+        // Initialize threat map when page loads
+        window.addEventListener('load', initThreatMap);
+    </script>
 </body>
 </html>
+</body></html>
