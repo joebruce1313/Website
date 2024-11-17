@@ -1,0 +1,108 @@
+/* Tron / Robocop Style Theme */
+body {
+    background: linear-gradient(120deg, #000428, #004e92);
+    color: #ffffff;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    color: cyan;
+}
+
+.nav {
+    text-align: center;
+    background-color: #111;
+    padding: 1rem;
+}
+
+.nav a {
+    color: cyan;
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+.nav a:hover {
+    color: #ffffff;
+}
+
+.welcome {
+    text-align: center;
+    padding: 2rem;
+    background-color: #222;
+}
+
+.service-button {
+    padding: 0.5rem 1rem;
+    background-color: cyan;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.service-button:hover {
+    background-color: #00bcd4;
+}
+
+.services, .about, .contact {
+    padding: 2rem;
+    margin: 1rem auto;
+    background-color: #111;
+    border-radius: 8px;
+    max-width: 800px;
+}
+
+.service {
+    background: #222;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #1a1a1a;
+    color: #666;
+}
+
+/* Chatbot */
+#chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: #222;
+    border: 2px solid cyan;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatbot-header {
+    background-color: cyan;
+    color: black;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+#chatbot-body {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+#chatbot-input {
+    padding: 0.5rem;
+    border: none;
+    border-top: 2px solid cyan;
+    outline: none;
+}
